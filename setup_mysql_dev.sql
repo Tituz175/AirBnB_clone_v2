@@ -1,4 +1,4 @@
-    -- This script that prepares a MySQL server for the project:
+-- This script that prepares a MySQL server for the project:
 
     -- A database hbnb_dev_db
     -- A new user hbnb_dev (in localhost)
