@@ -48,7 +48,7 @@ class DBStorage:
         cls_results = {}
         if cls:
             if isinstance(cls, str):
-                cls_name = classes.get(cls_name, None)
+                cls_name = classes.get(cls, None)
             cls_items = self.__session.query(cls_name)
         else:
             for cls_name in classes.values():
