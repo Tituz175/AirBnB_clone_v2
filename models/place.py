@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
-from models.base_model import BaseModel, Base, Storage
+import models
+from models.base_model import BaseModel, Base
 from sqlalchemy import Column, Integer, String, ForeignKey, Float
 from sqlalchemy.orm import relationship
 from os import getenv
@@ -35,5 +36,5 @@ class Place(BaseModel, Base):
             argument -- self
             Return: list of reviews instances
             """
-            objects = Storage.all(type(self))
+            objects = models.storage.all(type(self))
             return [val for val in objects.items() if val.place_id == self.id]
