@@ -1,0 +1,18 @@
+{
+  "Place.08f5e073-32ec-4012-b9dc-c67b0e33c21a": {
+    "city_id": "3da11fe7-e414-4671-8794-da9e354c4851",
+    "user_id": "e0110e86-37f4-4f95-915e-2b0c2dd1e34c",
+    "name": "House",
+    "description": "des",
+    "number_rooms": 4,
+    "number_bathrooms": 2,
+    "max_guest": 6,
+    "price_by_night": 100,
+    "latitude": 1.3,
+    "longitude": 2.3,
+    "id": "08f5e073-32ec-4012-b9dc-c67b0e33c21a",
+    "created_at": "2023-09-23T21:08:39.783212",
+    "updated_at": "2023-09-23T21:08:39.783216",
+    "__class__": "Place"
+  }
+}

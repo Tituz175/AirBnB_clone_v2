@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
-from models.base_model import BaseModel, Base
+from models.base_model import BaseModel, Base, Storage
 from sqlalchemy import Column, Integer, String, ForeignKey, Float
 
 
@@ -17,3 +17,15 @@ class Place(BaseModel, Base):
     longitude = Column(Float, nullable=True)
     city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
     user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
+
+    @property
+    def reviews(self):
+        """
+        Get reviews of place
+
+        Keyword arguments:
+        argument -- self
+        Return: list of reviews instances
+        """
+        objects = Storage.all(type(self))
+        return [val for val in objects.items() if val.place_id == self.id]
