@@ -1,10 +1,25 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
-import models
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, Integer, String, ForeignKey, Float
+from sqlalchemy import Column, Integer, String, ForeignKey, Float, Table
 from sqlalchemy.orm import relationship
 from os import getenv
+from models.amenity import Amenity
+from models.review import Review
+
+
+place_amenity = Table('place_amenity', Base.metadata,
+                      Column('place_id',
+                             String(60),
+                             ForeignKey('places.id'),
+                             nullable=False,
+                             primary_key=True),
+
+                      Column('amenity_id',
+                             String(60),
+                             ForeignKey('amenities.id'),
+                             nullable=False,
+                             primary_key=True))
 
 
 class Place(BaseModel, Base):
@@ -26,9 +41,16 @@ class Place(BaseModel, Base):
             "Review", backref="place", cascade="all, delete"
             )
 
+        amenities = relationship(
+            "Amenity", secondary=place_amenity,
+            viewonly=False,
+            back_populates="place_amenities"
+        )
+
     else:
         @property
         def reviews(self):
+            import models
             """
             Get reviews of place
 
@@ -36,5 +58,33 @@ class Place(BaseModel, Base):
             argument -- self
             Return: list of reviews instances
             """
-            objects = models.storage.all(type(self))
+            objects = models.storage.all(Review)
             return [val for val in objects.items() if val.place_id == self.id]
+
+        @property
+        def amenities(self):
+            import models
+            """
+            Get reviews of place
+
+            Keyword arguments:
+            argument -- self
+            Return: list of reviews instances
+            """
+            objects = models.storage.all(Amenity)
+            return [
+                val for val in objects.items()
+                if val.amenities_id is self.amenity_ids
+                ]
+
+        @amenities.setter
+        def amenities(self, amenities):
+            """
+            Set amenities of place
+
+            Keyword arguments:
+            argument -- self
+            Return: list of reviews instances
+            """
+            if isinstance(amenities, Amenity):
+                self.amenity_ids.append(amenities.id)
