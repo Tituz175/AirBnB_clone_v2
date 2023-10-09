@@ -53,14 +53,14 @@ def do_deploy(archive_path):
         filename, _ = os.path.splitext(fileNameExt)
         folderPath = "/data/web_static/releases/"
         put(archive_path, "/tmp/")
-        run(f"rm -fr {folderPath}{filename}")
-        run(f"mkdir -p {folderPath}{filename}/")
-        run(f"tar -xzf /tmp/{fileNameExt} -C {folderPath}{filename}/")
-        run(f"rm -rf /tmp/{fileNameExt}")
-        run(f"mv {folderPath}{filename}/web_static/* {folderPath}{filename}/")
+        run("rm -fr {}{}".format(folderPath, filename))
+        run("mkdir -p {}{}/".format(folderPath, filename))
+        run("tar -xzf /tmp/{} -C {}{}/".format(fileNameExt, folderPath, filename))
+        run("rm -rf /tmp/{}".format(fileNameExt))
+        run("mv {0}{1}/web_static/* {0}{1}/".format(folderPath, filename))
         run("rm -rf /data/web_static/current")
-        run(f"rm -rf {folderPath}{filename}/web_static")
-        run(f"ln -s {folderPath}{filename}/ /data/web_static/current")
+        run("rm -rf {}{}/web_static".format(folderPath, filename))
+        run("ln -s {}{}/ /data/web_static/current".format(folderPath, filename))
         print("New version deployed!")
         return True
     except Exception:
