@@ -54,11 +54,13 @@ def do_deploy(archive_path):
         put(archive_path, "/tmp/")
         run("rm -fr {}{}".format(folderPath, filename))
         run("mkdir -p {}{}/".format(folderPath, filename))
-        run("tar -xzf /tmp/{} -C {}{}/".format(fileNameExt, folderPath, filename))
+        run("tar -xzf /tmp/{} -C {}{}/"
+            .format(fileNameExt, folderPath, filename))
         run("rm -rf /tmp/{}".format(fileNameExt))
         run("mv {0}{1}/web_static/* {0}{1}/".format(folderPath, filename))
         run("rm -rf /data/web_static/current")
-        run("rm -rf {}{}/web_static".format(folderPath, filename))
+        run("rm -rf {}{}/web_static"
+            .format(folderPath, filename))
         run("ln -s {}{}/ /data/web_static/current".format(folderPath, filename))
         print("New version deployed!")
         return True

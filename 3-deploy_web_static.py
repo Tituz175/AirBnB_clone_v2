@@ -54,12 +54,14 @@ def do_deploy(archive_path):
         put(archive_path, "/tmp/")
         run("rm -fr {}{}".format(folderPath, filename))
         run("mkdir -p {}{}/".format(folderPath, filename))
-        run("tar -xzf /tmp/{} -C {}{}/".format(fileNameExt, folderPath, filename))
+        run("tar -xzf /tmp/{} -C {}{}/"
+            .format(fileNameExt, folderPath, filename))
         run("rm -rf /tmp/{}".format(fileNameExt))
         run("mv {0}{1}/web_static/* {0}{1}/".format(folderPath, filename))
         run("rm -rf /data/web_static/current")
         run("rm -rf {}{}/web_static".format(folderPath, filename))
-        run("ln -s {}{}/ /data/web_static/current".format(folderPath, filename))
+        run("ln -s {}{}/ /data/web_static/current"
+            .format(folderPath, filename))
         print("New version deployed!")
         return True
     except Exception:
@@ -68,6 +70,11 @@ def do_deploy(archive_path):
 
 @task
 def deploy():
+    """
+    Create an archive, deploy it to the server if creation was successful
+    Deploy archive file to server and serve it to the respective folder.
+    """
+
     archive_path = do_pack()
     if archive_path:
         return do_deploy(archive_path)
