@@ -8,14 +8,14 @@ Return: False if the file at the path archive_path does not exist
         otherwise returns False
 """
 
-from fabric.api import local, env, task, run, put
+from fabric.api import local, env, task, run, put, runs_once
 from datetime import datetime
 import os
 
 env.hosts = ["35.175.126.167", "18.206.197.223"]
 
 
-@task
+@runs_once
 def do_pack():
     """Create a .tgz archive from the contents of the web_static folder."""
 
@@ -63,4 +63,13 @@ def do_deploy(archive_path):
         print("New version deployed!")
         return True
     except Exception:
+        return False
+
+
+@task
+def deploy():
+    archive_path = do_pack()
+    if archive_path:
+        return do_deploy(archive_path)
+    else:
         return False
